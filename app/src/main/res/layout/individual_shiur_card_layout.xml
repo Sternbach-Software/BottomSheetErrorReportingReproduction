@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/shiur_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="55 Tzedaka to Mosg e's Authority, Torah prior Matan Torah, 55 Tzedaka to Relatives, Moshe's Authority, Torah prior Matan Torah, 55 Tzedaka to Relatives, Moshe's Authority, Torah prior Matan Torah, 55 Tzedaka to Relatives, Moshe's Authority, Torah prior Matan Torah, " />
+
+        <TextView
+            android:id="@+id/shiur_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Rabbi Yisroel Belsky fefqe fwejfefhjhhggfggjhgjhgjkgkkkhggjkjhggg g g gg" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

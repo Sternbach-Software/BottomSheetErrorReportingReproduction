@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">BottomSheetErrorReportingReproduction</string>
+
+    <!--<string name="long_lorem_impsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi quis eleifend quam adipiscing. Id volutpat lacus laoreet non curabitur gravida arcu. Justo eget magna fermentum iaculis eu non diam. Placerat duis ultricies lacus sed turpis tincidunt id. Amet aliquam id diam maecenas. Augue mauris augue neque gravida in fermentum et sollicitudin. Aliquet enim tortor at auctor urna nunc. Aliquet lectus proin nibh nisl condimentum id venenatis a. Tortor dignissim convallis aenean et. Aliquam sem et tortor consequat id porta nibh venenatis. Lorem mollis aliquam ut porttitor leo.
+
+Turpis egestas integer eget aliquet nibh praesent tristique. Sagittis orci a scelerisque purus semper eget duis. Diam quis enim lobortis scelerisque fermentum. Adipiscing vitae proin sagittis nisl. Mus mauris vitae ultricies leo integer malesuada nunc vel. Tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Et pharetra pharetra massa massa ultricies mi quis. Massa tempor nec feugiat nisl pretium fusce id velit. Euismod lacinia at quis risus sed vulputate odio. Sit amet consectetur adipiscing elit. Tortor consequat id porta nibh venenatis. Est ultricies integer quis auctor.
+
+Risus nullam eget felis eget nunc lobortis mattis. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada nunc. Platea dictumst quisque sagittis purus sit amet volutpat consequat mauris. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Mauris ultrices eros in cursus turpis. Et tortor at risus viverra adipiscing at in tellus. Non curabitur gravida arcu ac. Platea dictumst quisque sagittis purus. Ornare lectus sit amet est placerat in egestas erat imperdiet. Id leo in vitae turpis massa sed. Id interdum velit laoreet id donec. Diam donec adipiscing tristique risus.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi quis eleifend quam adipiscing. Id volutpat lacus laoreet non curabitur gravida arcu. Justo eget magna fermentum iaculis eu non diam. Placerat duis ultricies lacus sed turpis tincidunt id. Amet aliquam id diam maecenas. Augue mauris augue neque gravida in fermentum et sollicitudin. Aliquet enim tortor at auctor urna nunc. Aliquet lectus proin nibh nisl condimentum id venenatis a. Tortor dignissim convallis aenean et. Aliquam sem et tortor consequat id porta nibh venenatis. Lorem mollis aliquam ut porttitor leo.
+
+Turpis egestas integer eget aliquet nibh praesent tristique. Sagittis orci a scelerisque purus semper eget duis. Diam quis enim lobortis scelerisque fermentum. Adipiscing vitae proin sagittis nisl. Mus mauris vitae ultricies leo integer malesuada nunc vel. Tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Et pharetra pharetra massa massa ultricies mi quis. Massa tempor nec feugiat nisl pretium fusce id velit. Euismod lacinia at quis risus sed vulputate odio. Sit amet consectetur adipiscing elit. Tortor consequat id porta nibh venenatis. Est ultricies integer quis auctor.
+
+Risus nullam eget felis eget nunc lobortis mattis. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada nunc. Platea dictumst quisque sagittis purus sit amet volutpat consequat mauris. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Mauris ultrices eros in cursus turpis. Et tortor at risus viverra adipiscing at in tellus. Non curabitur gravida arcu ac. Platea dictumst quisque sagittis purus. Ornare lectus sit amet est placerat in egestas erat imperdiet. Id leo in vitae turpis massa sed. Id interdum velit laoreet id donec. Diam donec adipiscing tristique risus.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi quis eleifend quam adipiscing. Id volutpat lacus laoreet non curabitur gravida arcu. Justo eget magna fermentum iaculis eu non diam. Placerat duis ultricies lacus sed turpis tincidunt id. Amet aliquam id diam maecenas. Augue mauris augue neque gravida in fermentum et sollicitudin. Aliquet enim tortor at auctor urna nunc. Aliquet lectus proin nibh nisl condimentum id venenatis a. Tortor dignissim convallis aenean et. Aliquam sem et tortor consequat id porta nibh venenatis. Lorem mollis aliquam ut porttitor leo.
+
+Turpis egestas integer eget aliquet nibh praesent tristique. Sagittis orci a scelerisque purus semper eget duis. Diam quis enim lobortis scelerisque fermentum. Adipiscing vitae proin sagittis nisl. Mus mauris vitae ultricies leo integer malesuada nunc vel. Tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Et pharetra pharetra massa massa ultricies mi quis. Massa tempor nec feugiat nisl pretium fusce id velit. Euismod lacinia at quis risus sed vulputate odio. Sit amet consectetur adipiscing elit. Tortor consequat id porta nibh venenatis. Est ultricies integer quis auctor.
+
+Risus nullam eget felis eget nunc lobortis mattis. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada nunc. Platea dictumst quisque sagittis purus sit amet volutpat consequat mauris. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Mauris ultrices eros in cursus turpis. Et tortor at risus viverra adipiscing at in tellus. Non curabitur gravida arcu ac. Platea dictumst quisque sagittis purus. Ornare lectus sit amet est placerat in egestas erat imperdiet. Id leo in vitae turpis massa sed. Id interdum velit laoreet id donec. Diam donec adipiscing tristique risus."</string>-->
+    <!--TODO should the second word alse be capital? viz. "Has Attachment"-->
+    <!--TODO ^-->
+
+    <!--Theme-->
+
+    <string name="dark_theme_code" translatable="false">dark_mode</string>
+    <string name="follow_system_theme_code" translatable="false">system_theme</string>
+
+    <!--Startup page-->
+    <!--Download preference-->
+
+    <!--Filter during selection-->
+
+
+    <string name="offline_message_possibly_being_filtered">Device cancelled connection to server. This is possibly caused by a firewall or filter, but can also be caused by losing connection in middle of a server request. If there is a filter installed on this device, please allow the app to pass through the firewall or filter, or contact tech support for more help.</string>
+
+    <string name="offline_message_mention_of_cache_v2">Device is offline. Please connect to the internet to view this page. It will then be available for viewing offline.</string>
+    <string name="offline_message_no_mention_of_cache_v2">Device is offline. Please connect to the internet to view this page.</string>
+
+
+    <!--	<string name="features_list">\*Some\* of the features we have planned:\n            1. Audio player:\n            \* Ability to immediately resume last played shiur upon startup\n            \* Auto-rewind option to enable rewinding a few seconds after pausing\n            \* Fast-forward and rewind buttons (e.g. +/ 5 sec, 10 sec, etc.) with adjustable interval\n            \* Increase or decrease playback speed\n            \* Next/previous shiur\n            \* Queue\n                \* Add new shiurim to front or end of queue\n                \* Change order of shiurim in queue\n                \* Queue can contain both shiurim and playlists of shiurim\n            \* Driving mode (simpler interface and bigger buttons to make adjusting player in a car easy)\n            \* Android Auto\n            \* Sleep timer\n            \* Playback modes\n                \* Shuffle\n                \* Repeat shiur\n                \* Repeat all\n                \* Straight through\n                \* Repeat loop, marking point A and then point B, repeating the audio between the two\n            \* Skip silence\n            \* Chromecast support\n            \* Home screen widget for player controls\n            \* Lock screen controls\n            \* Integration with Google Assistant to adjust player\n            \* Equalizer\n            2. Personal shiurim library enhancements\n            \* Mark shiurim as listened-to\n                \* Smart-mark shiurim as listened-to even if a short amount of time is remaining\n            \* Tag shiurim as \Inspiring\, \Interesting\, etc.\n            3. View shiur attachments\n            4. Syncing playlists, history, etc. with the cloud\n            5. Shiur discovery:\n            \* Custom shiur suggestions tailored to your listening preferences based on what other users also preferred\n            \* More from categories or speakers you enjoy\n            \* Ability to click a button to view a random shiur\n                \* Can optionally select a length, category, or speaker, and only be displayed shiurim with those parameters\n            \* Integration with Google Assistant to find new shiurim\n            6. Filtering and sorting:\n            \* Ability to filter/sort speakers by:\n                \* Name\n                \* Number of shiurim\n            \* Ability to filter/sort playlists by:\n                \* Name\n                \* Number of shiurim\n                \* Whether it has certain speakers, categories, or series\n                \* Total length\n                \* Average length of shiur\n                \* Contains shiurim with length in a certain range\n            7. Subscribe to receive updates when a speaker, category, or series receives new shiurim\n            \* Can see feed of recent shiurim\n            \* Allow auto-downloading new shiurim\n            \* Can set notifications to only be shown inside the app\n            8. Ability to take notes and make bookmarks within shiur\n            9. Playlists:\n            \* See progress through playlist and how much more time is left\n            \* See time of day when playlist will be finished\n            10. Search history:\n            \* Keep track of searches and allow easy navigation back to results\n            \* Filter or remove entries\n            11. Reminders\n            \* Set reminder to finish partially listened to shiur\n            \* Set reminder to listen to shiur at specific time\n            \* Set daily reminder to keep up with yomi cycle\n            \* Set reminder to learn at specific time.\n            12. Review\n            \* Set reminder to review shiur or playlist of shiurim at custom interval (e.g. every Sunday at 5 PM, one week after listening, etc.)\n            \* Review cycle like R\\' Dolgin\\'s Talmudo Beyado program (i.e. review shiur 1 day after learning, then 8 days, 38, 128, 364, 728, etc.)\n            \* Can see how many times a shiur was listened to\n            13. Yomi cycles:\n            \* Daf yomi\n            \* Mishnah Berurah yomi\n            \* Etc.\n            \* Ability to mark each day as complete\n            \* Ability to listen to catch-up shiurim (e.g., Rabbi Rhine\\'s Take Ten for Talmud)\n            \* Ability to mark playlist as yomi cycle for reminders and a schedule\n            14. \In progress\ page to see shiurim which aren\\'t yet finished\n            15. Settings:\n            \* Stream or download over mobile data or only use wifi\n            \* Update information (e.g. recently added shiurim) by time interval (e.g. every Sunday at 7 AM)\n            \* Change download location to local storage or sd card\n            \* Option to delete listened-to shiurim a certain amount of time after finishing\n            \* Option to set max number of downloadable shiurim\n            16. Inyana deyoma (seasonal topics)\n            17. Support landscape mode\n            18. Home screen shortcut\n            \* Can go straight to speaker, category, playlist, or individual shiur by clicking icon on the home screen\n            19. Quick actions by long-pressing app icon\n            20. Redirect TorahDownloads.org links (e.g. from browser) to the respective page in the app\n            21. Stats page to see how many shiurim you have listened to, how many hours of shiurim you have listened to, etc.\n            \n            And many MANY more!</string>-->
+    <!--Preferences-->
+    <string name="dark_mode_on" translatable="false">isDarkModeOn</string>
+
+
+    <!--This section is for basic attributes -->
+
+    <!--This section is for preferences that contain a widget in their layout -->
+
+    <!--This section is for preferences that launch a dialog to edit the preference -->
+
+    <!--This section is for advanced attributes-->
+
+    <string name="error_message">Error occurred. We are working hard to fix it!</string>
+    <string name="playback_speed_key" translatable="false">playback_speed_key</string>
+    <string name="default_rewind_interval" translatable="false">15</string>
+    <string name="default_fast_forward_interval" translatable="false">30</string>
+
+    <!--From UAMP-->
+
+
+    <!--UAMP-->
+
+    <!-- Notificaiton Channel -->
+    <string name="notification_channel">Now Playing</string>
+    <string name="notification_channel_description">Shows what music is currently playing in UAMP</string>
+
+    <!-- Notification actions -->
+
+    <!-- Error messages -->
+    <string name="error_media_not_found">Could not locate requested media.</string>
+    <string name="generic_error">The application has encountered an unexpected error.</string>
+    <!-- Allowed caller template -->
+    <string name="allowed_caller_log">
+        Caller has a valid certificate, but its package doesn\'t match any expected package for the
+        given certificate. To allow this caller, add the following to the allowed callers list:\n
+        <![CDATA[
+        <signature name=\"%1$s\" package=\"%2$s\">\n\t<key>%3$s</key>\n</signature>\n
+        ]]>
+    </string>
+
+    <!-- Cast menu item -->
+
+    <!-- Browse Tree -->
+    <string name="recommended_title">Recommended</string>
+    <string name="albums_title">Albums</string>
+</resources>
