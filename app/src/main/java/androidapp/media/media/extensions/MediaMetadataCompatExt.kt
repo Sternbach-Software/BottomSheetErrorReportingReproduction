@@ -234,13 +234,6 @@ fun MediaMetadataCompat.toMediaItemMetadata(): com.google.android.exoplayer2.Med
         setWriter(writer)
         setArtworkUri(albumArtUri)
         val extras = Bundle()
-        getString(ShiurQueue.ORIGINAL_ARTWORK_URI_KEY)?.let {
-            // album art is a content:// URI. Keep the original for Cast.
-            extras.putString(
-                ShiurQueue.ORIGINAL_ARTWORK_URI_KEY,
-                getString(ShiurQueue.ORIGINAL_ARTWORK_URI_KEY)
-            )
-        }
         extras.putLong(MediaMetadataCompat.METADATA_KEY_DURATION, duration)
         setExtras(extras)
     }.build()

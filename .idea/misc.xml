@@ -7,15 +7,18 @@
         <entry key="../../../../private/var/folders/cw/fhv2ffj52bn7wtd9_l8m47fc0000gn/T/drawable-temp/fake_of_anim_arrow.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/avd_checkable_expandcollapse_collapsed_to_expanded.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/blue_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.1165" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/media_item_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/about_td_fragment.xml" value="0.22864583333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3273905996758509" />
+        <entry key="app/src/main/res/layout/activity_shiurim_page.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/layout/dialog_player_bottom_sheet.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/layout/dialog_sort_or_filter_simple.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/layout/fast_scroll_recycler_view_layout.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_player_bottom_sheet.xml" value="0.3733103434244792" />
         <entry key="app/src/main/res/layout/individual_shiur_card_layout.xml" value="0.30149253731343284" />
+        <entry key="app/src/main/res/layout/shiurim_fab_layout.xml" value="0.10520833333333333" />
       </map>
     </option>
   </component>

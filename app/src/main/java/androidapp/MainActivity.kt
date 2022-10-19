@@ -13,7 +13,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.mediarouter.app.MediaRouteButton
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import uamp.InjectorUtils
 import com.example.android.media.viewmodels.MainActivityViewModel
@@ -23,7 +22,6 @@ import com.example.bottomsheeterrorreportingreproduction.androidapp.*
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.dp
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.ld
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.lv
-import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -78,8 +76,6 @@ class MainActivity : AppCompatActivity() {
     // Perform initialization of all fragments.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        castContext =
-//            CastContext.getSharedInstance(this) // Initialize the Cast context. This is required so that the media route button can be created in the bottom sheet TODO may not have to be before setContentView now that it moved from the app bar to the bottom sheet
         volumeControlStream =
             AudioManager.STREAM_MUSIC //the volume controls should adjust the music volume while in the app.
         setContentView(R.layout.activity_main)
@@ -124,13 +120,11 @@ class MainActivity : AppCompatActivity() {
         playerOverflowMenu = findViewById(R.id.player_more_options)
         playerSpeakerName = findViewById(R.id.speaker_name_player)
 
-        val mediaRouteButton = findViewById<MediaRouteButton?>(R.id.mediaRouteButton)
 
 
         //make the text animate so the user can see long names
         headerShiurName.isSelected = true
         findViewById<TextView>(R.id.shiur_name_player).isSelected = true
-        CastButtonFactory.setUpMediaRouteButton(this, mediaRouteButton)
 
 
         //Setup header

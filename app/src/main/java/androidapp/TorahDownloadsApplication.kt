@@ -2,37 +2,40 @@ package com.example.bottomsheeterrorreportingreproduction.androidapp
 
 import KotlinFunctionLibrary
 import android.app.Application
+import android.app.DownloadManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import androidapp.CONSTANTS
+import androidapp.ShiurAdapter
+import androidapp.ShiurWithAllFilterMetadata
+import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import com.example.android.media.viewmodels.MainActivityViewModel
 import com.example.android.media.viewmodels.NowPlayingFragmentViewModel
-import androidapp.CONSTANTS
-import androidapp.ShiurWithAllFilterMetadata
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.library.ShiurQueue
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.ld
-import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.setThemeFromSettings
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.Util
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import timber.log.Timber
+import java.io.File
 
 
 lateinit var mEntireApplicationContext: Context
 
 lateinit var preferencesManager: SharedPreferences
+lateinit var downloadManager: DownloadManager
 lateinit var mAppScope: CoroutineScope
 lateinit var tdApplication: TorahDownloadsApplication
-
-val gson by lazy { Gson() }
 
 //Set default just in case they are accessed by the first network fragment before they are fetched from preference manager
 var keepCache by KotlinFunctionLibrary.LazyMutable { true }
@@ -81,8 +84,6 @@ class TorahDownloadsApplication : Application() {
             showHowOldContentIs = true
             ageToDisplayHowOldContentIs = defaultAgeToDisplayHowOldContentIs.toInt()
         }
-        setThemeFromSettings()
-//                benchmarkFile = File(externalFilesDirRoot, "Benchmarks.txt").createFile()
         mAppScope.launch(Dispatchers.Default) {//launch all pre-processing on a separate thread to improve startup time
             launch(Dispatchers.Default) {
                 val networkCallback = object : ConnectivityManager.NetworkCallback() {
@@ -110,17 +111,6 @@ class TorahDownloadsApplication : Application() {
                                 .build(),
                             networkCallback
                         )
-                    /* TODO known bug with older version: "After further research, I have noticed that there’s been an issue with this callback that seems to call the `onLost()` everytime the user switches capabilities from Cellular to Wi-Fi." - https://evanschepsiror.medium.com/checking-androids-network-connectivity-with-network-callback-fdb8d24a920c
-                    *
-                    * Consider using:
-                    * fun isNetworkAvailable(): Boolean {
-                          val connectivityManager = application.getSystemService(Context.CONNECTIVITY_SERVICE)
-                          return if (connectivityManager is ConnectivityManager) {
-                              connectivityManager.activeNetworkInfo?.isConnected ?: false
-                          } else false
-                      }
-                    * */
-                    //TODO where should cm.unregisterNetworkCallback(ConnectivityManager.NetworkCallback()) be called to release the callback? This needs to be considered in light of keeping downloads going in the background. I am not sure if it needs to be called being that when the app is dismissed in Recents, the logs from the callback stop being written, so the system may be releasing the resources.
                 }
             }
         }

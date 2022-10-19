@@ -25,10 +25,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Declare that we support Cast. -->
-        <meta-data android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-            android:value="com.example.bottomsheeterrorreportingreproduction.androidapp.media.cast.UampCastOptionsProvider"/>
-
         <service
             android:name=".androidapp.media.media.MusicService"
             android:enabled="true"

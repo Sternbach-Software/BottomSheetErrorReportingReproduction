@@ -190,7 +190,7 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/scrim" />
 
-                        <androidx.mediarouter.app.MediaRouteButton
+                        <Button
                             android:id="@+id/mediaRouteButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

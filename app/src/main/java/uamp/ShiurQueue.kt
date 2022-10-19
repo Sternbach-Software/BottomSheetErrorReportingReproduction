@@ -34,22 +34,6 @@ import java.util.concurrent.TimeUnit
  */
 class ShiurQueue : AbstractMusicSource() {
 
-    companion object {
-        const val ORIGINAL_ARTWORK_URI_KEY = "com.example.bottomsheeterrorreportingreproduction.androidapp.JSON_ARTWORK_URI"
-    }
-
-    //TODO this should be a HashSet, but there are several issues with that (a LinkedHashSet may solve some of these issues).
-    // 1. The user will click on a shiur, and the add function will return fine
-    //      (does it return false on a set if the set already contained it),
-    //      but theb shiur wouldn'['t have actually been added, and I would have
-    //      no way of knowing that so I can communicate it to the user. Spotify allows
-    //      duplicate songs in the queue, but I wonder if that is unique to songs.
-    //      I don't think I would want duplicate shiurim in my queue - I dislike realizing
-    //      that I have heard this shiur before and I have been listening for 30 minutes,
-    //      especially when I am catching up on a series.
-    // 2. One of the options for how to respond when playing a shiur is to add the shiur to the beggining of the queue.
-    //      A HashSeet does not guarantee iteration order, so that would not be an option.
-    // 3. The user should have the ability to sort the queue (manually or automatically)
     val catalog = mutableListOf<ShiurWithAllFilterMetadata>()
 
     init {

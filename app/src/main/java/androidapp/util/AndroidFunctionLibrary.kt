@@ -168,64 +168,6 @@ object AndroidFunctionLibrary {
         )
     }
 
-
-    fun setThemeFromSettings() {
-        val followSystem = mEntireApplicationContext.getString(R.string.follow_system_theme_code)
-        setThemeFromSettings(
-            preferencesManager
-                .getString(
-                    mEntireApplicationContext.getString(R.string.dark_mode_on),
-                    followSystem
-                ),
-            followSystem
-        )
-    }
-
-    fun setThemeFromSettings(
-        code: String?,
-        followSystem: String? = mEntireApplicationContext.getString(R.string.follow_system_theme_code)
-    ) {
-        if (code != followSystem)
-            setTheme(code == mEntireApplicationContext.getString(R.string.dark_theme_code))
-        else { //reset to system default
-            setTheme(null)
-        }
-    }
-
-    private fun setTheme(nightMode: Boolean?) {
-        runOnUI {
-            AppCompatDelegate.setDefaultNightMode(
-                when {
-                    nightMode == null -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    nightMode -> AppCompatDelegate.MODE_NIGHT_YES
-                    else -> AppCompatDelegate.MODE_NIGHT_NO
-                }
-            )
-        }
-    }
-
-    fun <T> MutableList<T>.toSynchronizedList(): MutableList<T> = Collections.synchronizedList(this)
-
-    fun dateOfCacheStale(): Long = getRightNowInSeconds() - cacheTimeInSeconds
-
-    fun getRightNowInSeconds(): Long = 1L///Instant.now().epochSecond
-
-    fun Any.toStringLikeDataClass(): String {
-        val propsString =
-            this::class
-                .memberProperties
-//            .filter { exclude.isEmpty() || !exclude.contains(it.name) }
-                .filter { it.visibility == KVisibility.PUBLIC }
-                .joinToString(", ") {
-                    val value =
-//                    if (!mask.isEmpty() && mask.contains(it.name)) "****"
-//                    else
-                        it.getter.call(this).toString()
-                    "${it.name}=${value}"
-                }
-
-        return "${this::class.simpleName}(${propsString})"
-    }
     fun Bundle.contentsToString() = keySet()?.joinToString { key -> "$key=${get(key)}" }
 
     fun displayErrorToast(t: Throwable) {

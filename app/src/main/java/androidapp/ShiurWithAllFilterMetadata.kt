@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.MEDIA_DESCRIPTION_EXTRAS_START_PLAYBACK_POSITION_MS
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.extensions.*
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.library.ShiurQueue
+import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.ld
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.Util
 import kotlinx.serialization.Contextual
 import java.util.concurrent.TimeUnit
@@ -35,12 +36,13 @@ data class ShiurWithAllFilterMetadata(
     var uri: Uri? = null,//if downloaded, this is the file's uri
     var positionInQueue: Int = -1,
     var playbackProgress: Long = 0,
+    val remoteURL: String = Util.getShiurLink(shiurID),
     @PrimaryKey
     var rowid: Int = shiurID
 ) : Shiur(shiurID.toString(), title, length.toString(), speaker) {
 
     val mediaId: String
-        get() = uri?.toString() ?: Util.getShiurLink(shiurID)
+        get() = uri?.toString()?.ld { "Local uri gotten: $it" } ?: Util.getShiurLink(shiurID)
 
     @Contextual//not sure what this means, but it makes the error go away. I have not tested whether it interferes with JSON parsing. I think it means not to look for it in the JSON
     var percentDownloaded =
@@ -164,9 +166,6 @@ data class ShiurWithAllFilterMetadata(
         // MediaMetadataCompat object. This is needed to send accurate metadata to the
         // media session during updates.
         downloadStatus = MediaDescriptionCompat.STATUS_NOT_DOWNLOADED
-
-        // Keep the original artwork URI for being included in Cast metadata object.
-        putString(ShiurQueue.ORIGINAL_ARTWORK_URI_KEY, imageURL)
 
         putLong(MEDIA_DESCRIPTION_EXTRAS_START_PLAYBACK_POSITION_MS, playbackProgress)
         // Allow it to be used in the typical builder style.
