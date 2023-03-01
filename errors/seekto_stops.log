@@ -1,0 +1,48 @@
+
+2022-10-18 23:37:13.398 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media position updated: 8976, numSeconds: 8
+2022-10-18 23:37:13.498 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media position updated: 9077, numSeconds: 9
+2022-10-18 23:37:13.530 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Drag started
+2022-10-18 23:37:13.604 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media position updated: 9183, numSeconds: 9
+2022-10-18 23:37:13.620 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Drag stopped
+2022-10-18 23:37:13.620 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Calling seekTo(1991064)
+2022-10-18 23:37:13.620 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Is prepared: true
+2022-10-18 23:37:13.628 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Calling getCurrentLargeIcon()
+2022-10-18 23:37:13.629 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Queue: [MediaSession.QueueItem {Description=Ruth 17 Perek 4 Posuk 12, Rabbi Pesach Siegel, Sefer Rus, Id=0 }]
+2022-10-18 23:37:13.629 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: IconUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, currentIconUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, currentBitmap=android.graphics.Bitmap@54145f5
+2022-10-18 23:37:13.635 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: playbackStateObserver called: PlaybackState {state=6, position=342522, buffered position=342522, speed=0.0, updated=12749737, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0}
+2022-10-18 23:37:13.635 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: updateState(
+            playbackState=PlaybackState {state=6, position=342522, buffered position=342522, speed=0.0, updated=12749737, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0} (bundle is EXO_SPEED=1.0, androidx.media.PlaybackStateCompat.Extras.KEY_MEDIA_ID=file:///storage/emulated/0/Android/data/com.example.bottomsheeterrorreportingreproduction/files/Music/1037662.mp3),
+            mediaMetadata=android.support.v4.media.MediaMetadataCompat@2457f48
+        )
+2022-10-18 23:37:13.635 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: state changed. Previous: 3, new: 6
+2022-10-18 23:37:13.638 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: mediaMetadata observer called: NowPlayingMetadata(id=1037662, state=6, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000).
+2022-10-18 23:37:13.638 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: calling showBottomSheetIfNotVisible(expand=false). bottomSheetIsVisible=true, isHideable=true
+2022-10-18 23:37:13.639 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Received media metadata: NowPlayingMetadata(id=1037662, state=6, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000)
+2022-10-18 23:37:13.639 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media metadata updated: id 1037662 duration 3198000, numSeconds: 3198.0
+2022-10-18 23:37:13.645 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: saveRecentSongAndQueueToStorage()
+2022-10-18 23:37:13.650 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Calling getCurrentLargeIcon()
+2022-10-18 23:37:13.651 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Queue: [MediaSession.QueueItem {Description=Ruth 17 Perek 4 Posuk 12, Rabbi Pesach Siegel, Sefer Rus, Id=0 }]
+2022-10-18 23:37:13.651 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: IconUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, currentIconUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, currentBitmap=android.graphics.Bitmap@54145f5
+2022-10-18 23:37:13.657 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: playbackStateObserver called: PlaybackState {state=3, position=342522, buffered position=342523, speed=1.0, updated=12749761, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0}
+2022-10-18 23:37:13.657 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: updateState(
+            playbackState=PlaybackState {state=3, position=342522, buffered position=342523, speed=1.0, updated=12749761, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0} (bundle is EXO_SPEED=1.0, androidx.media.PlaybackStateCompat.Extras.KEY_MEDIA_ID=file:///storage/emulated/0/Android/data/com.example.bottomsheeterrorreportingreproduction/files/Music/1037662.mp3),
+            mediaMetadata=android.support.v4.media.MediaMetadataCompat@2457f48
+        )
+2022-10-18 23:37:13.657 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: state changed. Previous: 6, new: 3
+2022-10-18 23:37:13.660 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: mediaMetadata observer called: NowPlayingMetadata(id=1037662, state=3, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000).
+2022-10-18 23:37:13.660 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: calling showBottomSheetIfNotVisible(expand=false). bottomSheetIsVisible=true, isHideable=true
+2022-10-18 23:37:13.661 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Received media metadata: NowPlayingMetadata(id=1037662, state=3, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000)
+2022-10-18 23:37:13.661 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media metadata updated: id 1037662 duration 3198000, numSeconds: 3198.0
+2022-10-18 23:37:13.679 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: playbackStateObserver called: PlaybackState {state=1, position=342533, buffered position=342523, speed=0.0, updated=12749789, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0}
+2022-10-18 23:37:13.679 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: updateState(
+            playbackState=PlaybackState {state=1, position=342533, buffered position=342523, speed=0.0, updated=12749789, actions=2461535, error code=0, error message=null, custom actions=[], active item id=0} (bundle is EXO_SPEED=1.0, androidx.media.PlaybackStateCompat.Extras.KEY_MEDIA_ID=file:///storage/emulated/0/Android/data/com.example.bottomsheeterrorreportingreproduction/files/Music/1037662.mp3),
+            mediaMetadata=android.support.v4.media.MediaMetadataCompat@2457f48
+        )
+2022-10-18 23:37:13.679 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: state changed. Previous: 3, new: 1
+2022-10-18 23:37:13.680 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: isPlaying observer called: isPlaying=false, this.isPlaying=true
+2022-10-18 23:37:13.680 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Is playing changed: false
+2022-10-18 23:37:13.680 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: mediaMetadata observer called: NowPlayingMetadata(id=1037662, state=1, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000).
+2022-10-18 23:37:13.680 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Received media metadata: NowPlayingMetadata(id=1037662, state=1, albumArtUri=https://www.torahdownloads.org/assets/speakers/thumb-150/13.jpg, title=Ruth 17 Perek 4 Posuk 12, subtitle=Rabbi Pesach Siegel, duration=3198000)
+2022-10-18 23:37:13.680 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media metadata updated: id 1037662 duration 3198000, numSeconds: 3198.0
+2022-10-18 23:37:13.682 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Updating play/pause button. Is playing: false
+2022-10-18 23:37:13.704 12741-12741/com.example.bottomsheeterrorreportingreproduction D/AndroidFunctionLibrary: Media position updated: 342533, numSeconds: 342

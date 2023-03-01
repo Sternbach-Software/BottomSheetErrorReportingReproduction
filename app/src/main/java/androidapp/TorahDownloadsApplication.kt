@@ -11,6 +11,7 @@ import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.StrictMode
 import androidapp.CONSTANTS
 import androidapp.ShiurAdapter
 import androidapp.ShiurWithAllFilterMetadata
@@ -67,8 +68,10 @@ fun setCurrentlyPlayingShiurInMemoryAndPersist(shiur: ShiurWithAllFilterMetadata
 
 //val pastShiurSerializationVersions = listOf<String>()
 class TorahDownloadsApplication : Application() {
-    // Using by lazy so the database and the repository are only created when they're needed
-    // rather than when the application starts
+
+    init {
+        StrictMode.enableDefaults();
+    }
 
     @ExperimentalSerializationApi
     override fun onCreate() {
@@ -112,6 +115,28 @@ class TorahDownloadsApplication : Application() {
                             networkCallback
                         )
                 }
+                downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+                val shiur = ShiurAdapter
+                    .shiurim
+                    .first()
+                val localURI =
+                    Uri.fromFile(
+                        File(
+                            getExternalFilesDir(Environment.DIRECTORY_MUSIC),
+                            "${shiur.shiurID}.mp3"
+                        )
+                    )
+                shiur.localURI = localURI
+                downloadManager.enqueue(
+                    DownloadManager
+                        .Request(
+                            shiur
+                                .remoteURL
+                                .toUri()
+                        )
+                        .setAllowedOverMetered(false)
+                        .setDestinationUri(localURI)
+                )
             }
         }
         configureLogging()

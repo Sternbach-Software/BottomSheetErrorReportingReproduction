@@ -7,7 +7,6 @@ import android.support.v4.media.MediaMetadataCompat
 import androidx.room.PrimaryKey
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.MEDIA_DESCRIPTION_EXTRAS_START_PLAYBACK_POSITION_MS
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.extensions.*
-import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.library.ShiurQueue
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.ld
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.Util
 import kotlinx.serialization.Contextual
@@ -33,16 +32,16 @@ data class ShiurWithAllFilterMetadata(
     var dateAddedToHistory: Long? = null,//for ordering
     var dateAddedToRecentlyAdded: Long? = null,//if updating a shiur with withContentOf(), the only way to tell whether it should be removed from recently added is if the date is null on the new shiur and it is not recently added, but this one is
     val searchPageQuery: String = "",//if from search page, this is the query that this shiur came from
-    var uri: Uri? = null,//if downloaded, this is the file's uri
+    var localURI: Uri? = null,//if downloaded, this is the file's uri
     var positionInQueue: Int = -1,
     var playbackProgress: Long = 0,
-    val remoteURL: String = Util.getShiurLink(shiurID),
+    val remoteURL: String = "https://torahcdn.net/tdn/$shiurID.mp3",
     @PrimaryKey
     var rowid: Int = shiurID
 ) : Shiur(shiurID.toString(), title, length.toString(), speaker) {
 
     val mediaId: String
-        get() = uri?.toString()?.ld { "Local uri gotten: $it" } ?: Util.getShiurLink(shiurID)
+        get() = localURI?.toString()?.ld { "Local uri gotten: $it" } ?: remoteURL.ld { "Remove uri gotten: $it" }
 
     @Contextual//not sure what this means, but it makes the error go away. I have not tested whether it interferes with JSON parsing. I think it means not to look for it in the JSON
     var percentDownloaded =
@@ -70,7 +69,7 @@ data class ShiurWithAllFilterMetadata(
             "$dateAddedToHistory~" +
             "$dateAddedToRecentlyAdded~" +
             "$searchPageQuery~" +
-            "$uri~" +
+            "$localURI~" +
             "$percentDownloaded~" +
             "$sizeInBytes"
     }
@@ -148,8 +147,8 @@ data class ShiurWithAllFilterMetadata(
         artist = shiur.speaker
         album = shiur.category
         duration = durationMs
-        genre = "TorahDownloads" //TODO should this be the genre?
-        mediaUri = Util.getShiurLink(shiur.shiurID)
+        genre = "TorahDownloads"
+        mediaUri = shiur.mediaId
         val imageURL = Util.getImageURL(shiur.speakerID, CONSTANTS.IMAGE_SIZE_150)
         albumArtUri = imageURL
         trackNumber = 1

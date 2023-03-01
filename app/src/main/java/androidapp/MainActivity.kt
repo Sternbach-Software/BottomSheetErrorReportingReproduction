@@ -290,7 +290,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onStopTrackingTouch(slider: Slider) {
                         ld("Drag stopped")
                         isDragging = false
-                        mainActivityViewModel.seekTo((value * 1E3).toLong())
+                        mainActivityViewModel.seekTo((slider.value * 1E3).toLong())
                     }
                 }
             )
@@ -320,10 +320,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 ld("Received media metadata: $it")
                 val secondsFromMillis = floor(it.duration?.div(1E3) ?: 0.0)
-                val secondsInt = secondsFromMillis.toInt()
                 ld("Media metadata updated: id ${it.id} duration ${it.duration}, numSeconds: $secondsFromMillis")
                 playerSeekbar.valueTo = secondsFromMillis.toFloat()
-                playerTotalTime.text = secondsInt.toString()
+                playerTotalTime.text = secondsFromMillis.toInt().toString()
                 headerShiurName.text = it.title
                 playerShiurName.text = it.title
                 headerSpeakerName.text = it.subtitle
@@ -386,7 +385,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showBottomSheetIfNotVisible(expand: Boolean) {
+    private fun showBottomSheetIfNotVisible(expand: Boolean/*always false*/) {
         ld("calling showBottomSheetIfNotVisible(expand=$expand). bottomSheetIsVisible=$bottomSheetIsVisible, isHideable=${behavior.isHideable}")
         if (!bottomSheetIsVisible) {
             bottomSheetIsVisible = true

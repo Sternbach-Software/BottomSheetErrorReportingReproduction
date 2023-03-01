@@ -20,6 +20,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.ResultReceiver
 import android.support.v4.media.MediaBrowserCompat
@@ -29,16 +30,18 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
+import androidapp.CONSTANTS
+import androidapp.ShiurAdapter
+import androidapp.ShiurWithAllFilterMetadata
 import androidx.core.content.ContextCompat
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT
 import com.example.bottomsheeterrorreportingreproduction.R
-import com.example.bottomsheeterrorreportingreproduction.androidapp.*
-import androidapp.ShiurAdapter
-import androidapp.CONSTANTS
-import androidapp.ShiurWithAllFilterMetadata
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.extensions.*
 import com.example.bottomsheeterrorreportingreproduction.androidapp.media.media.library.*
+import com.example.bottomsheeterrorreportingreproduction.androidapp.setCurrentlyPlayingShiurInMemoryAndPersist
+import com.example.bottomsheeterrorreportingreproduction.androidapp.shiurQueue
+import com.example.bottomsheeterrorreportingreproduction.androidapp.shiurWaitingToBePlayed
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.contentsToString
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.ld
 import com.example.bottomsheeterrorreportingreproduction.androidapp.util.AndroidFunctionLibrary.le
@@ -62,6 +65,11 @@ import kotlinx.coroutines.*
  *
  * For more information on implementing a MediaBrowserService,
  * visit [https://developer.android.com/guide/topics/media-apps/audio-app/building-a-mediabrowserservice.html](https://developer.android.com/guide/topics/media-apps/audio-app/building-a-mediabrowserservice.html).
+ *
+ * This class also handles playback for Cast sessions.
+ * When a Cast session is active, playback commands are passed to a
+ * [CastPlayer](https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/ext/cast/CastPlayer.html),
+ * otherwise they are passed to an ExoPlayer for local playback.
  */
 open class MusicService : MediaBrowserServiceCompat() {
 
@@ -69,7 +77,8 @@ open class MusicService : MediaBrowserServiceCompat() {
     private lateinit var shiurMediaSource: ShiurQueue
     private lateinit var packageValidator: PackageValidator
 
-    // The current player will be an ExoPlayer (for local playback)
+    // The current player will either be an ExoPlayer (for local playback) or a CastPlayer (for
+    // remote playback through a Cast device).
     private lateinit var currentPlayer: Player
 
 
@@ -111,8 +120,8 @@ open class MusicService : MediaBrowserServiceCompat() {
      * See [Player.AudioComponent.setAudioAttributes] for details.
      */
     private val exoPlayer: ExoPlayer by lazy {
-        SimpleExoPlayer.Builder(this).build()
-            .apply { //TODO replace with ExoPlayer.Builder (will all functionality be the same?? Make sure to test) - see https://stackoverflow.com/questions/70191652/simpleexoplayer-is-deprecated-in-2-16-version-of-exoplayer-what-to-use-now
+        ExoPlayer.Builder(this).build()
+            .apply {
                 setAudioAttributes(uAmpAudioAttributes, true)
                 setHandleAudioBecomingNoisy(true)
                 addListener(playerListener)
@@ -188,6 +197,7 @@ open class MusicService : MediaBrowserServiceCompat() {
      * playback to continue and allow users to stop it with the notification.
      */
     override fun onTaskRemoved(rootIntent: Intent) {
+        ld("onTaskRemoved(rootIntent=$rootIntent)")
         saveRecentSongAndQueueToStorage()
         super.onTaskRemoved(rootIntent)
 
@@ -199,10 +209,12 @@ open class MusicService : MediaBrowserServiceCompat() {
          * The service will then remove itself as a foreground service, and will call
          * [stopSelf].
          */
-        currentPlayer.stop(/* reset= */true)//TODO this is a deprecated method. Suggest to use stop() (and clearMediaItems() if applicable, though: I am not sure _exactly_ what clearMediaItems() does, but I think it clears the queue, and don't think the user wants that).
+        currentPlayer.clearMediaItems()
+        currentPlayer.stop()
     }
 
     override fun onDestroy() {
+        ld("musicService.onDestroy()")
         mediaSession.run {
             isActive = false
             release()
@@ -352,7 +364,7 @@ open class MusicService : MediaBrowserServiceCompat() {
             metadataList.indexOf(itemToPlay).coerceAtLeast(0)
 
         currentPlayer.playWhenReady = playWhenReady
-        currentPlayer.stop()
+//        currentPlayer.stop()
         // Set playlist and prepare.
         val list = (metadataList + itemToPlay).distinct()
             .filter { it.description != null/*is this a good way to check if it is NOTHING_PLAYING?*/ }//TODO can theoretically be optimimzed because if metadataList only has one item, and it is itemToPlay, then the user just wants to play that one song, so no need to create all of these immutable copied objects with distinct().filter()
@@ -401,7 +413,8 @@ open class MusicService : MediaBrowserServiceCompat() {
         newPlayer.setSkipSilence(_isSkipSilence)
         newPlayer.setPlaybackSpeed(_playbackSpeed)
 
-        previousPlayer?.stop(/* reset= */true)
+        previousPlayer?.clearMediaItems()
+        previousPlayer?.stop()
     }
 
     private fun saveRecentSongAndQueueToStorage() {
@@ -412,8 +425,6 @@ open class MusicService : MediaBrowserServiceCompat() {
         if (currentPlaylistItems.isEmpty()) {
             return
         }
-        val currentlyPlayingShiur =
-            getCurrentlyPlayingShiur() //?: return //what should happen if this is null?
         val description = currentPlaylistItems[currentMediaItemIndex].description
         val position = currentPlayer.currentPosition
 
@@ -478,30 +489,26 @@ open class MusicService : MediaBrowserServiceCompat() {
                         "        )"
             )
             shiurMediaSource.whenReady {
-                var shiurByID: ShiurWithAllFilterMetadata? = null
                 var itemToPlay: MediaMetadataCompat? = shiurMediaSource.find { item ->
                     item.id == mediaId
                 }
 
                 if (itemToPlay == null) {
                     serviceScope.launch(Dispatchers.IO) {
-                        shiurByID = ShiurAdapter.shiurim.find {
+                        itemToPlay = ShiurAdapter.shiurim.find {
                             it.shiurID == Util.getShiurID(mediaId).toInt()
-                        }
-                        itemToPlay = shiurByID!!.asMediaItemMetadata()
+                        }!!.asMediaItemMetadata()
                         if (itemToPlay == null) {
                             Util.displayErrorToast(NullPointerException("Error playing $mediaId"))
                         } else {
 
                             val playbackStartPositionMs = 0L
+//                                getPlaybackOffset(shiurByID, extras, itemToPlay)
 
                             launch(Dispatchers.Main) {
                                 preparePlaylist(
                                     //buildPlaylist(itemToPlay),
-                                    (if (extras?.getBoolean(CONSTANTS.DONT_ADD_TO_QUEUE_BUNDLE_KEY) == true) listOf(
-                                        itemToPlay
-                                    )
-                                    else shiurMediaSource.toList()) as List<MediaMetadataCompat>,
+                                    listOf(itemToPlay) as List<MediaMetadataCompat>,
                                     itemToPlay!!,
                                     playWhenReady,
                                     playbackStartPositionMs
@@ -512,14 +519,10 @@ open class MusicService : MediaBrowserServiceCompat() {
                 } else {
                     preparePlaylist( //TODO DRY up
                         //buildPlaylist(itemToPlay),
-                        (
-                                if (extras?.getBoolean(CONSTANTS.DONT_ADD_TO_QUEUE_BUNDLE_KEY) == true)
-                                    listOf(itemToPlay)
-                                else shiurMediaSource.toList()
-                                ) as List<MediaMetadataCompat>,
+                        listOf<MediaMetadataCompat?>(itemToPlay) as List<MediaMetadataCompat>,
                         itemToPlay!!,
                         playWhenReady,
-                        0L
+                        0L//getPlaybackOffset(shiurByID, extras, itemToPlay)
                     )
                 }
             }
@@ -531,13 +534,17 @@ open class MusicService : MediaBrowserServiceCompat() {
             itemToPlay: MediaMetadataCompat?
         ) = (shiurByID?.let {
             it.playbackProgress.ld { "Got playback progress from shiur: $it" }
+//                .getNormalizedShiurProgressOffset(it.length.secondsToMilliseconds())
         }
             ?: extras?.getLong(
                 MEDIA_DESCRIPTION_EXTRAS_START_PLAYBACK_POSITION_MS,
                 C.TIME_UNSET
             )?.let {
                 ld("Got playback progress from extras: $it, itemToPlay.duration=${itemToPlay?.duration}")
-                itemToPlay?.duration
+                itemToPlay?.duration/*?.let { it1 ->
+                    it.getNormalizedShiurProgressOffset(it1)
+                        .ld { "Normalized offset: $it" }
+                }*/
             }
             ?: C.TIME_UNSET)
 
@@ -579,20 +586,37 @@ open class MusicService : MediaBrowserServiceCompat() {
                         "            cb=$cb\n" +
                         "        )"
             )
-            val toString = COMMAND_SET_SPEED_AND_PITCH.toString()
+            val commandSpeedAndPitch = COMMAND_SET_SPEED_AND_PITCH.toString()
+            val commandSeek = COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM.toString()
             return when (command) {
-                toString -> {
-                    setPlaybackSpeed(player, extras!!.getFloat(toString))
+                commandSpeedAndPitch -> {
+                    setPlaybackSpeed(player, extras!!.getFloat(commandSpeedAndPitch))
                     true
                 }
                 CONSTANTS.COMMAND_SET_SKIP_SILENCE -> {
                     player.setSkipSilence(extras!!.getBoolean(CONSTANTS.COMMAND_SET_SKIP_SILENCE))
                     true
                 }
+                commandSeek -> {
+                    val pos = extras!!.getLong(commandSeek)
+                    ld("Received seek command in music service, seeking to $pos")
+                    player.seekTo(pos)
+                    true
+                }
                 else -> false
             }
         }
 
+        /**
+         * Builds a playlist based on a [MediaMetadataCompat].
+         *
+         * TODO: Support building a playlist by artist, genre, etc...
+         *
+         * @param item Item to base the playlist on.
+         * @return a [List] of [MediaMetadataCompat] objects representing a playlist.
+         */
+        private fun buildPlaylist(item: MediaMetadataCompat): List<MediaMetadataCompat> =
+            shiurMediaSource.filter { it.album == item.album }.sortedBy { it.trackNumber }
     }
 
     private fun setPlaybackSpeed(
@@ -625,7 +649,10 @@ open class MusicService : MediaBrowserServiceCompat() {
         }
 
         override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
-            stopForeground(true)
+            ld("onNotificationCancelled(notificationId=$notificationId, dismissedByUser=$dismissedByUser)")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            } else stopForeground(true)
             isForegroundService = false
             stopSelf()
         }
@@ -654,6 +681,7 @@ open class MusicService : MediaBrowserServiceCompat() {
                             setCurrentlyPlayingShiurInMemoryAndPersist(it)
                             ld("Setting shiurWaitingToBePlayed to null")
                             shiurWaitingToBePlayed = null
+//                            onShiurChangeCompleteListeners.runAndRemoveAll()
                         }
 
                         if (!playWhenReady) {
@@ -671,7 +699,6 @@ open class MusicService : MediaBrowserServiceCompat() {
                 }
             }
         }
-
         inline val Int.reasonCodeString
             get() = when (this) {
                 PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST -> "PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST"
@@ -681,7 +708,6 @@ open class MusicService : MediaBrowserServiceCompat() {
                 PLAY_WHEN_READY_CHANGE_REASON_END_OF_MEDIA_ITEM -> "PLAY_WHEN_READY_CHANGE_REASON_END_OF_MEDIA_ITEM"
                 else -> this.toString()
             }
-
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
             ld("Play when ready changed to $playWhenReady; reason: ${reason.reasonCodeString}")
 //            if(reason == PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS) Toast.makeText(applicationContext, "Another app has requested to play audio. Cannot play shiur.", Toast.LENGTH_SHORT).show()
@@ -704,12 +730,12 @@ open class MusicService : MediaBrowserServiceCompat() {
         }
 
         override fun onPlayerError(error: PlaybackException) {
-            var message = R.string.generic_error
-            le("Player error: " + error.errorCodeName + " (" + error.errorCode + "). Stack trace: ${error.stackTraceToString()}")
+            var message = R.string.generic_error;
+            le("Player error: " + error.errorCodeName + " (" + error.errorCode + "). Stack trace: ${error.stackTraceToString()}");
             if (error.errorCode == PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS
                 || error.errorCode == PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND
             ) {
-                message = R.string.error_media_not_found
+                message = R.string.error_media_not_found;
             }
             Toast.makeText(
                 applicationContext,
@@ -723,8 +749,7 @@ open class MusicService : MediaBrowserServiceCompat() {
 /*
  * (Media) Session events
  */
-const val NETWORK_FAILURE =
-    "com.example.bottomsheeterrorreportingreproduction.androidapp.media.session.NETWORK_FAILURE"
+const val NETWORK_FAILURE = "tech.torah.aldis.androidapp.media.session.NETWORK_FAILURE"
 
 /** Content styling constants */
 private const val CONTENT_STYLE_BROWSABLE_HINT = "android.media.browse.CONTENT_STYLE_BROWSABLE_HINT"
@@ -733,5 +758,8 @@ private const val CONTENT_STYLE_SUPPORTED = "android.media.browse.CONTENT_STYLE_
 private const val CONTENT_STYLE_LIST = 1
 private const val CONTENT_STYLE_GRID = 2
 
+private const val UAMP_USER_AGENT = "uamp.next"
+
 const val MEDIA_DESCRIPTION_EXTRAS_START_PLAYBACK_POSITION_MS = "playback_start_position_ms"
 
+private const val TAG = "MusicService"

@@ -47,9 +47,6 @@ object AndroidFunctionLibrary {
         }
     }
 
-    fun getShiurLink(shiurID: Int) = "https://torahcdn.net/tdn/$shiurID.mp3"
-
-
     val Int.dp: Int
         get() = getPXFromDP(toFloat())
 
