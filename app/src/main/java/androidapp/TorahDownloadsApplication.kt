@@ -40,11 +40,8 @@ lateinit var tdApplication: TorahDownloadsApplication
 
 //Set default just in case they are accessed by the first network fragment before they are fetched from preference manager
 var keepCache by KotlinFunctionLibrary.LazyMutable { true }
-var showHowOldContentIs by KotlinFunctionLibrary.LazyMutable { true }
 var cacheTimeInSeconds by KotlinFunctionLibrary.LazyMutable { defaultCacheStaleInSeconds.toInt() }
-var ageToDisplayHowOldContentIs by KotlinFunctionLibrary.LazyMutable { defaultAgeToDisplayHowOldContentIs.toInt() }
 val defaultCacheStaleInSeconds by lazy { "2419200" }
-val defaultAgeToDisplayHowOldContentIs by lazy { "86400" }
 
 //val shiurDownloadPreferenceOnlyWiFI by lazy { mEntireApplicationContext.getString(R.string.only_over_wifi_code) }
 lateinit var mainActivityViewModel: MainActivityViewModel
@@ -84,8 +81,6 @@ class TorahDownloadsApplication : Application() {
         mAppScope.launch(Dispatchers.IO) {
             keepCache = true
             cacheTimeInSeconds = defaultCacheStaleInSeconds.toInt()
-            showHowOldContentIs = true
-            ageToDisplayHowOldContentIs = defaultAgeToDisplayHowOldContentIs.toInt()
         }
         mAppScope.launch(Dispatchers.Default) {//launch all pre-processing on a separate thread to improve startup time
             launch(Dispatchers.Default) {
